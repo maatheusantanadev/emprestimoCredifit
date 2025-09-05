@@ -1,0 +1,32 @@
+{
+  "name": "emprestimo-credifit",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "start:dev": "nest start --watch"
+  },
+  "devDependencies": {
+    "ts-jest": "^29.2.5",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.0.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleFileExtensions": ["ts", "js", "json"],
+    "testMatch": ["**/*.spec.ts", "**/*.e2e-spec.ts"],
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
+    "collectCoverageFrom": ["src/**/*.(ts|js)"],
+    "coverageDirectory": "./coverage"
+  }
+}
