@@ -1,82 +1,47 @@
+// src/controllers/companies/companies.controller.ts
 import {
   Body,
   Controller,
   Delete,
   Get,
+  HttpException,
   Param,
   Post,
   Put,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import {
   Company,
   CreateCompanyDto,
 } from 'src/interfaces/companies/CreateCompanyDto.interfaces';
-
-import { CompaniesRepository } from 'src/repository/companies/companies.repository';
-import { PostgrestError } from '@supabase/supabase-js';
+import { CompaniesService } from 'src/service/companies/companies.service';
 
 @Controller('companies')
 export class CompaniesController {
-  constructor(private readonly companiesRepo: CompaniesRepository) {}
+  constructor(private readonly companiesService: CompaniesService) {}
 
   @Get()
   async getAll(): Promise<Company[]> {
     try {
-      return await this.companiesRepo.findAll();
-    } catch (error: unknown) {
-      const supabaseError = error as PostgrestError;
-
+      return await this.companiesService.findAll();
+    } catch (err) {
       throw new HttpException(
         {
           message: 'Erro ao buscar empresas',
-          details: supabaseError?.message ?? 'Erro desconhecido',
-          code: supabaseError?.code,
+          details: (err as Error).message,
         },
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        500,
       );
     }
   }
 
   @Get(':id')
   async getOne(@Param('id') id: string): Promise<Company> {
-    try {
-      const company = await this.companiesRepo.findById(id);
-      if (!company) {
-        throw new HttpException('Empresa não encontrada', HttpStatus.NOT_FOUND);
-      }
-      return company;
-    } catch (error: unknown) {
-      const supabaseError = error as PostgrestError;
-
-      throw new HttpException(
-        {
-          message: 'Erro ao buscar empresas',
-          details: supabaseError?.message ?? 'Erro desconhecido',
-          code: supabaseError?.code,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return this.companiesService.findById(id);
   }
 
   @Post()
   async create(@Body() body: CreateCompanyDto): Promise<Company> {
-    try {
-      return await this.companiesRepo.create(body);
-    } catch (error: unknown) {
-      const supabaseError = error as PostgrestError;
-
-      throw new HttpException(
-        {
-          message: 'Erro ao criar empresas',
-          details: supabaseError?.message ?? 'Erro desconhecido',
-          code: supabaseError?.code,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return this.companiesService.create(body);
   }
 
   @Put(':id')
@@ -84,41 +49,11 @@ export class CompaniesController {
     @Param('id') id: string,
     @Body() body: Partial<CreateCompanyDto>,
   ): Promise<Company> {
-    try {
-      const company = await this.companiesRepo.update(id, body);
-      if (!company) {
-        throw new HttpException('Empresa não encontrada', HttpStatus.NOT_FOUND);
-      }
-      return company;
-    } catch (error: unknown) {
-      const supabaseError = error as PostgrestError;
-
-      throw new HttpException(
-        {
-          message: 'Erro ao atualizar empresa',
-          details: supabaseError?.message ?? 'Erro desconhecido',
-          code: supabaseError?.code,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return this.companiesService.update(id, body);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string): Promise<{ message: string }> {
-    try {
-      return await this.companiesRepo.delete(id);
-    } catch (error: unknown) {
-      const supabaseError = error as PostgrestError;
-
-      throw new HttpException(
-        {
-          message: 'Erro ao deletar empresa',
-          details: supabaseError?.message ?? 'Erro desconhecido',
-          code: supabaseError?.code,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    return this.companiesService.delete(id);
   }
 }

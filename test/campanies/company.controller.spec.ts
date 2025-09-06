@@ -1,56 +1,57 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CompaniesController } from '../../src/controllers/companies/companies.controller';
-import { CompaniesRepository } from '../../src/repository/companies/companies.repository';
+import { CompaniesService } from '../../src/service/companies/companies.service';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
-describe('CompanyController', () => {
+describe('CompaniesController', () => {
   let controller: CompaniesController;
 
-  const mockRepo = {
+  const mockService = {
     findAll: jest.fn(),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CompaniesController],
-      providers: [{ provide: CompaniesRepository, useValue: mockRepo }],
+      providers: [{ provide: CompaniesService, useValue: mockService }],
     }).compile();
 
     controller = module.get<CompaniesController>(CompaniesController);
 
-    jest.clearAllMocks(); // limpa mocks entre testes
+    jest.clearAllMocks();
   });
 
   it('deve retornar a lista de empresas', async () => {
     const companies = [
       { id: '1', cnpj: '123456', corporate_name: 'Empresa X' } as any,
     ];
-    mockRepo.findAll.mockResolvedValueOnce(companies);
+    mockService.findAll.mockResolvedValueOnce(companies);
 
     const result = await controller.getAll();
 
     expect(result).toEqual(companies);
-    expect(mockRepo.findAll).toHaveBeenCalledTimes(1);
+    expect(mockService.findAll).toHaveBeenCalledTimes(1);
   });
 
   it('deve lançar HttpException em caso de erro', async () => {
-    mockRepo.findAll.mockRejectedValueOnce(new Error('DB error'));
+    // Mocka o serviço para lançar um erro
+    mockService.findAll.mockRejectedValueOnce(new Error('DB error'));
 
-    await expect(controller.getAll()).rejects.toThrow(HttpException);
-
+    let error: HttpException | null = null;
     try {
       await controller.getAll();
     } catch (err) {
-      expect(err).toBeInstanceOf(HttpException);
-      expect((err as HttpException).getStatus()).toBe(
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-      expect((err as HttpException).getResponse()).toEqual(
-        expect.objectContaining({
-          message: 'Erro ao buscar empresas',
-          details: 'DB error',
-        }),
-      );
+      error = err as HttpException;
     }
+
+    expect(error).not.toBeNull(); // garante que capturou
+    expect(error).toBeInstanceOf(HttpException);
+    expect(error!.getStatus()).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(error!.getResponse()).toEqual(
+      expect.objectContaining({
+        message: 'Erro ao buscar empresas',
+        details: 'DB error',
+      }),
+    );
   });
 });

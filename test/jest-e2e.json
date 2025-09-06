@@ -1,6 +1,4 @@
 {
-  "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": ".",
   "testEnvironment": "node",
   "moduleFileExtensions": ["ts", "js", "json"],
   "rootDir": ".",
