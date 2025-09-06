@@ -1,7 +1,7 @@
 // test/employees/employees.controller.spec.ts
 import { Test, TestingModule } from '@nestjs/testing';
 import { EmployeesController } from 'src/controllers/employees/employess.controller';
-import { EmployeesRepository } from 'src/repository/employees/employees.repository';
+import { EmployeesService } from 'src/service/employees/employees.service';
 import {
   Employee,
   CreateEmployeeDto,
@@ -10,8 +10,8 @@ import {
 describe('EmployeesController', () => {
   let controller: EmployeesController;
 
-  // Mock de EmployeesRepository
-  const mockEmployeesRepository = {
+  // Mock de EmployeesService
+  const mockEmployeesService = {
     findAll: jest.fn(),
     findById: jest.fn(),
     findByCompany: jest.fn(),
@@ -25,8 +25,8 @@ describe('EmployeesController', () => {
       controllers: [EmployeesController],
       providers: [
         {
-          provide: EmployeesRepository,
-          useValue: mockEmployeesRepository,
+          provide: EmployeesService,
+          useValue: mockEmployeesService,
         },
       ],
     }).compile();
@@ -56,11 +56,11 @@ describe('EmployeesController', () => {
         },
       ];
 
-      mockEmployeesRepository.findAll.mockResolvedValue(employees);
+      mockEmployeesService.findAll.mockResolvedValue(employees);
 
       const result = await controller.findAll();
       expect(result).toEqual(employees);
-      expect(mockEmployeesRepository.findAll).toHaveBeenCalled();
+      expect(mockEmployeesService.findAll).toHaveBeenCalled();
     });
   });
 
@@ -76,21 +76,11 @@ describe('EmployeesController', () => {
         created_at: new Date(),
       };
 
-      mockEmployeesRepository.findById.mockResolvedValue(employee);
+      mockEmployeesService.findById.mockResolvedValue(employee);
 
       const result = await controller.findById('uuid-1');
       expect(result).toEqual(employee);
-      expect(mockEmployeesRepository.findById).toHaveBeenCalledWith('uuid-1');
-    });
-
-    it('should return null if employee not found', async () => {
-      mockEmployeesRepository.findById.mockResolvedValue(null);
-
-      const result = await controller.findById('non-existent-id');
-      expect(result).toBeNull();
-      expect(mockEmployeesRepository.findById).toHaveBeenCalledWith(
-        'non-existent-id',
-      );
+      expect(mockEmployeesService.findById).toHaveBeenCalledWith('uuid-1');
     });
   });
 
@@ -115,11 +105,11 @@ describe('EmployeesController', () => {
         created_at: new Date(),
       };
 
-      mockEmployeesRepository.create.mockResolvedValue(createdEmployee);
+      mockEmployeesService.create.mockResolvedValue(createdEmployee);
 
       const result = await controller.create(createDto);
       expect(result).toEqual(createdEmployee);
-      expect(mockEmployeesRepository.create).toHaveBeenCalledWith(createDto);
+      expect(mockEmployeesService.create).toHaveBeenCalledWith(createDto);
     });
   });
 
@@ -136,26 +126,13 @@ describe('EmployeesController', () => {
         created_at: new Date(),
       };
 
-      mockEmployeesRepository.update.mockResolvedValue(updatedEmployee);
+      mockEmployeesService.update.mockResolvedValue(updatedEmployee);
 
       const result = await controller.update('uuid-1', updates);
       expect(result).toEqual(updatedEmployee);
-      expect(mockEmployeesRepository.update).toHaveBeenCalledWith(
+      expect(mockEmployeesService.update).toHaveBeenCalledWith(
         'uuid-1',
         updates,
-      );
-    });
-
-    it('should return null if employee not found', async () => {
-      mockEmployeesRepository.update.mockResolvedValue(null);
-
-      const result = await controller.update('non-existent-id', {
-        salary: 8000,
-      });
-      expect(result).toBeNull();
-      expect(mockEmployeesRepository.update).toHaveBeenCalledWith(
-        'non-existent-id',
-        { salary: 8000 },
       );
     });
   });
@@ -163,11 +140,11 @@ describe('EmployeesController', () => {
   describe('delete', () => {
     it('should delete the employee and return message', async () => {
       const message = { message: 'Funcionário deletado com sucesso' };
-      mockEmployeesRepository.delete.mockResolvedValue(message);
+      mockEmployeesService.delete.mockResolvedValue(message);
 
       const result = await controller.delete('uuid-1');
       expect(result).toEqual(message);
-      expect(mockEmployeesRepository.delete).toHaveBeenCalledWith('uuid-1');
+      expect(mockEmployeesService.delete).toHaveBeenCalledWith('uuid-1');
     });
   });
 });

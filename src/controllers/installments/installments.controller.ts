@@ -7,40 +7,40 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { InstallmentsRepository } from 'src/repository/installments/installments.repository';
+import { InstallmentsService } from 'src/service/installments/installments.service';
 import { CreateInstallmentDto } from 'src/interfaces/installments/CreateinstallmentsDto.interfaces';
 
 @Controller('installments')
 export class InstallmentsController {
-  constructor(private readonly installmentsRepo: InstallmentsRepository) {}
+  constructor(private readonly installmentsService: InstallmentsService) {}
 
   @Get()
   async findAll() {
-    return this.installmentsRepo.findAll();
+    return this.installmentsService.findAll();
   }
 
   @Get(':id')
   async findById(@Param('id') id: string) {
-    return this.installmentsRepo.findById(id);
+    return this.installmentsService.findById(id);
   }
 
   @Get('loan/:loanId')
   async findByLoanId(@Param('loanId') loanId: string) {
-    return this.installmentsRepo.findByLoanId(loanId);
+    return this.installmentsService.findByLoanId(loanId);
   }
 
   @Post()
   async create(@Body() body: CreateInstallmentDto) {
-    return this.installmentsRepo.create(body);
+    return this.installmentsService.create(body);
   }
 
   @Patch(':id/pay')
   async markAsPaid(@Param('id') id: string) {
-    return this.installmentsRepo.markAsPaid(id);
+    return this.installmentsService.markAsPaid(id);
   }
 
   @Delete(':id')
   async delete(@Param('id') id: string) {
-    return this.installmentsRepo.delete(id);
+    return this.installmentsService.delete(id);
   }
 }
