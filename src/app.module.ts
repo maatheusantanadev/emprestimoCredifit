@@ -10,6 +10,8 @@ import { LoansRepository } from './repository/loans/loans.repository';
 import { LoansController } from './controllers/loans/loans.controller';
 import { LoansService } from './service/loans/loans.service';
 import { CompaniesService } from './service/companies/companies.service';
+import { EmployeesService } from './service/employees/employees.service';
+import { InstallmentsService } from './service/installments/installments.service';
 
 @Module({
   imports: [SupabaseModule],
@@ -27,6 +29,8 @@ import { CompaniesService } from './service/companies/companies.service';
 
     CompaniesService,
     LoansService,
+    EmployeesService,
+    InstallmentsService,
   ],
 })
 export class AppModule {}

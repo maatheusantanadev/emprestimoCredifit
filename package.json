@@ -11,22 +11,32 @@
     "start:dev": "nest start --watch"
   },
   "devDependencies": {
-    "ts-jest": "^29.2.5",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.3.1",
     "jest": "^30.0.0",
+    "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.3"
+    "typescript": "^5.9.2"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "moduleFileExtensions": ["ts", "js", "json"],
-    "testMatch": ["**/*.spec.ts", "**/*.e2e-spec.ts"],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ],
+    "testMatch": [
+      "**/*.spec.ts",
+      "**/*.e2e-spec.ts"
+    ],
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/src/$1"
     },
-    "collectCoverageFrom": ["src/**/*.(ts|js)"],
+    "collectCoverageFrom": [
+      "src/**/*.(ts|js)"
+    ],
     "coverageDirectory": "./coverage"
   }
 }
