@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { CreateLoanDto } from 'src/interfaces/loans/CreateloansDto.interfaces';
-import { LoansService } from 'src/service/loans/loans.service';
+import { LoansService } from 'src/service/loans/loans.service'; 
 
 @Controller('loans')
 export class LoansController {
