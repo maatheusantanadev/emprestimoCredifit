@@ -4,11 +4,11 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { CompaniesRepository } from 'src/repository/companies/companies.repository';
+import { CompaniesRepository } from './../../repository/companies/companies.repository';
 import {
   Company,
   CreateCompanyDto,
-} from 'src/interfaces/companies/CreateCompanyDto.interfaces';
+} from './../../interfaces/companies/CreateCompanyDto.interfaces';
 
 @Injectable()
 export class CompaniesService {

@@ -3,9 +3,9 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { LoansRepository } from 'src/repository/loans/loans.repository';
-import { EmployeesRepository } from 'src/repository/employees/employees.repository';
-import { CreateLoanDto } from 'src/interfaces/loans/CreateloansDto.interfaces';
+import { LoansRepository } from './../../repository/loans/loans.repository';
+import { EmployeesRepository } from './../../repository/employees/employees.repository';
+import { CreateLoanDto } from './../../interfaces/loans/CreateloansDto.interfaces';
 
 @Injectable()
 export class LoansService {

@@ -4,7 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import {
   Loan,
   CreateLoanDto,
-} from 'src/interfaces/loans/CreateloansDto.interfaces';
+} from './../../interfaces/loans/CreateloansDto.interfaces';
 
 @Injectable()
 export class LoansRepository {

@@ -4,11 +4,11 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { EmployeesRepository } from 'src/repository/employees/employees.repository';
+import { EmployeesRepository } from './../../repository/employees/employees.repository';
 import {
   Employee,
   CreateEmployeeDto,
-} from 'src/interfaces/employees/CreateEmployeesDto.interfaces';
+} from './../../interfaces/employees/CreateEmployeesDto.interfaces';
 
 @Injectable()
 export class EmployeesService {

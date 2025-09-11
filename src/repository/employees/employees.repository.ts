@@ -4,7 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import {
   Employee,
   CreateEmployeeDto,
-} from 'src/interfaces/employees/CreateEmployeesDto.interfaces';
+} from './../../interfaces/employees/CreateEmployeesDto.interfaces';
 
 @Injectable()
 export class EmployeesRepository {

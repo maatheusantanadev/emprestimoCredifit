@@ -4,7 +4,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import {
   Company,
   CreateCompanyDto,
-} from 'src/interfaces/companies/CreateCompanyDto.interfaces';
+} from './../../interfaces/companies/CreateCompanyDto.interfaces';
 
 @Injectable()
 export class CompaniesRepository {

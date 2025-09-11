@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { SupabaseModule } from 'src/database/database.module';
-import { CompaniesRepository } from 'src/repository/companies/companies.repository';
-import { CompaniesController } from 'src/controllers/companies/companies.controller';
+import { SupabaseModule } from './database/database.module';
+import { CompaniesRepository } from './repository/companies/companies.repository';
+import { CompaniesController } from './controllers/companies/companies.controller';
 import { EmployeesController } from './controllers/employees/employess.controller';
 import { EmployeesRepository } from './repository/employees/employees.repository';
 import { LoansRepository } from './repository/loans/loans.repository';

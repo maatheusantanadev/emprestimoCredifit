@@ -12,8 +12,8 @@ import {
 import {
   Company,
   CreateCompanyDto,
-} from 'src/interfaces/companies/CreateCompanyDto.interfaces';
-import { CompaniesService } from 'src/service/companies/companies.service';
+} from './../../interfaces/companies/CreateCompanyDto.interfaces';
+import { CompaniesService } from './../../service/companies/companies.service';
 
 @Controller('companies')
 export class CompaniesController {

@@ -8,11 +8,11 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { EmployeesService } from 'src/service/employees/employees.service';
+import { EmployeesService } from './../../service/employees/employees.service';
 import {
   Employee,
   CreateEmployeeDto,
-} from 'src/interfaces/employees/CreateEmployeesDto.interfaces';
+} from './../../interfaces/employees/CreateEmployeesDto.interfaces';
 
 @Controller('employees')
 export class EmployeesController {

@@ -7,8 +7,8 @@ import {
   Patch,
   Delete,
 } from '@nestjs/common';
-import { CreateLoanDto } from 'src/interfaces/loans/CreateloansDto.interfaces';
-import { LoansService } from 'src/service/loans/loans.service'; 
+import { CreateLoanDto } from './../../interfaces/loans/CreateloansDto.interfaces';
+import { LoansService } from './../../service/loans/loans.service'; 
 
 @Controller('loans')
 export class LoansController {
