@@ -3,13 +3,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true })],
+  imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env']})],
   providers: [
     {
       provide: 'SUPABASE_CLIENT',
       useFactory: (configService: ConfigService): SupabaseClient => {
         const url = configService.get<string>('SUPABASE_URL');
         const key = configService.get<string>('SUPABASE_SERVICE_ROLE_KEY');
+
+        console.log('Supabase URL:', url);
+        console.log('Service Role Key:', key ? 'OK' : 'MISSING');
+        
         if (!url || !key) {
           throw new Error('Supabase URL or Service Role Key is not defined');
         }
